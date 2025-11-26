@@ -1,0 +1,146 @@
+{
+  "beverages": [
+    {
+      "id": 1,
+      "name": "Café Americano",
+      "description": "Café negro clásico preparado con granos 100% arábicos.",
+      "price": 2.5,
+      "image": "../src/assets/images/products/cafeAmericano.png"
+    },
+    {
+      "id": 2,
+      "name": "Café Latte",
+      "description": "Espresso con leche vaporizada y una fina capa de espuma.",
+      "price": 3.5,
+      "image": "../src/assets/images/products/cafeLatte.jpeg"
+    },
+    {
+      "id": 3,
+      "name": "Cappuccino",
+      "description": "Espresso con partes iguales de leche vaporizada y espuma.",
+      "price": 3.8,
+      "image": "../src/assets/images/products/cappuccino.jpeg"
+    },
+    {
+      "id": 4,
+      "name": "Mocha",
+      "description": "Café con leche, chocolate y un toque de crema batida.",
+      "price": 4.0,
+      "image": "../src/assets/images/products/mocha.jpeg"
+    },
+    {
+      "id": 5,
+      "name": "Té Verde Matcha",
+      "description": "Té verde japonés molido con leche vaporizada.",
+      "price": 4.2,
+      "image": "../src/assets/images/products/matcha.png"
+    },
+    {
+      "id": 6,
+      "name": "Té Chai Latte",
+      "description": "Té negro con especias, leche vaporizada y miel.",
+      "price": 3.9,
+      "image": "../src/assets/images/products/teChai.png"
+    },
+    {
+      "id": 7,
+      "name": "Chocolate Caliente",
+      "description": "Bebida cremosa de cacao natural con leche entera.",
+      "price": 3.0,
+      "image": "../src/assets/images/products/chocolateCaliente.png"
+    },
+    {
+      "id": 8,
+      "name": "Frappe de Vainilla",
+      "description": "Bebida fría batida con vainilla y crema batida encima.",
+      "price": 4.5,
+      "image": "../src/assets/images/products/frappeVainilla.png"
+    },
+    {
+      "id": 9,
+      "name": "Limonada Natural",
+      "description": "Refrescante jugo de limón con hierbabuena y hielo.",
+      "price": 2.8,
+      "image": "../src/assets/images/products/limonada.jpeg"
+    },
+    {
+      "id": 10,
+      "name": "Smoothie de Fresa",
+      "description": "Bebida fría a base de fresa natural y yogur.",
+      "price": 4.3,
+      "image": "../src/assets/images/products/smoothieFresa.png"
+    }
+  ],
+  "desserts": [
+    {
+      "id": 11,
+      "name": "Cheesecake de Fresa",
+      "description": "Pastel cremoso de queso con salsa de fresa natural.",
+      "price": 4.5,
+      "image": "../src/assets/images/products/cheesecakeFresa.png"
+    },
+    {
+      "id": 12,
+      "name": "Brownie de Chocolate",
+      "description": "Delicioso brownie con trozos de nuez y cobertura de chocolate.",
+      "price": 3.8,
+      "image": "../src/assets/images/products/brownieChocolate.jpeg"
+    },
+    {
+      "id": 13,
+      "name": "Tiramisú",
+      "description": "Postre italiano con café, cacao y crema mascarpone.",
+      "price": 4.7,
+      "image": "../src/assets/images/products/tiramisu.png"
+    },
+    {
+      "id": 14,
+      "name": "Cupcake de Vainilla",
+      "description": "Pequeño pastel esponjoso con glaseado de vainilla.",
+      "price": 2.5,
+      "image": "../src/assets/images/products/cupcakeVainilla.png"
+    },
+    {
+      "id": 15,
+      "name": "Croissant de Mantequilla",
+      "description": "Panecillo francés crujiente y dorado, hecho con mantequilla pura.",
+      "price": 2.2,
+      "image": "../src/assets/images/products/croissant.png"
+    },
+    {
+      "id": 16,
+      "name": "Galletas de Avena",
+      "description": "Galletas caseras con avena, miel y trozos de pasas.",
+      "price": 2.0,
+      "image": "../src/assets/images/products/GalletaAvena.jpeg"
+    },
+    {
+      "id": 17,
+      "name": "Muffin de Arándanos",
+      "description": "Suave muffin con trozos de arándano fresco.",
+      "price": 3.2,
+      "image": "../src/assets/images/products/muffinArandanos.png"
+    },
+    {
+      "id": 18,
+      "name": "Tarta de Manzana",
+      "description": "Tarta tradicional con relleno de manzana y canela.",
+      "price": 4.0,
+      "image": "../src/assets/images/products/tartaManzana.png"
+    },
+    {
+      "id": 19,
+      "name": "Donut Glaseado",
+      "description": "Rosquilla esponjosa con glaseado de azúcar.",
+      "price": 2.3,
+      "image": "../src/assets/images/products/donutGlaseado.png"
+    },
+    {
+      "id": 20,
+      "name": "Macarons",
+      "description": "Delicados pastelitos franceses con relleno cremoso de sabores variados.",
+      "price": 5.0,
+      "image": "../src/assets/images/products/macarons.jpeg"
+    }
+  ]
+}
