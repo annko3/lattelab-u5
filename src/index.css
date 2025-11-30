@@ -26,3 +26,21 @@ section {
 .outset-border {
   border-style: outset;
 }
+
+/* Mostrar menú */
+.showMenuNav {
+  display: block;
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background-color: #a9745c; 
+  z-index: 50; 
+  padding-top: 80px;
+}
+
+/* Ocultar menú */
+.hideMenuNav {
+  display: none;
+}

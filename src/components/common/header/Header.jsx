@@ -5,6 +5,7 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 
 function Header() {
   const [user, setUser] = useState(null);
+  const [isNavOpen, setIsNavOpen] = useState(false);
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (currentUser) => {
@@ -17,9 +18,112 @@ function Header() {
     signOut(auth);
   }
 
+  //Menu de Escritorio
+  const DesktopMenu = () => (
+    <ul className="flex py-[10px] px-[20px] justify-between flex-wrap text-white">
+      <div className="justify-start flex flex-wrap gap-[20px] text-white">
+        <li className="hover:bg-beige hover:text-brown-pink p-2 rounded-2xl font-bold">
+          <Link to="/">Inicio</Link>
+        </li>
+        <li className="hover:bg-beige hover:text-brown-pink hover:font-bold p-2 rounded-2xl font-bold">
+          <Link to="/aboutUs">Quienes Somos</Link>
+        </li>
+        <li className="hover:bg-beige hover:text-brown-pink hover:font-bold p-2 rounded-2xl font-bold">
+          <Link to="/books">Libros</Link>
+        </li>
+        <li className="hover:bg-beige hover:text-brown-pink hover:font-bold p-2 rounded-2xl font-bold">
+          <Link to="/talleres">Talleres</Link>
+        </li>
+        <li className="hover:bg-beige hover:text-brown-pink hover:font-bold p-2 rounded-2xl font-bold">
+          <Link to="/menu">Menú</Link>
+        </li>
+        <li className="hover:bg-beige hover:text-brown-pink hover:font-bold p-2 rounded-2xl font-bold">
+          <Link to="/contact">Contacto</Link>
+        </li>
+        <li className="hover:bg-beige hover:text-brown-pink hover:font-bold p-2 rounded-2xl font-bold">
+          <Link to="/dashboard">Testimonios</Link>
+        </li>
+      </div>
+
+      <div>
+        {user ? (
+          <li
+            onClick={handleLogout}
+            className="hover:bg-beige hover:text-brown-pink p-2 rounded-2xl font-bold cursor-pointer"
+          >
+            Cerrar Sesión
+          </li>
+        ) : (
+          <li className="hover:bg-beige hover:text-brown-pink p-2 rounded-2xl font-bold">
+            <Link to="/login">Iniciar Sesión</Link>
+          </li>
+        )}
+      </div>
+    </ul>
+  );
+
+  //Menu de Movil
+  const MobileMenu = () => (
+    <div className={isNavOpen ? "showMenuNav" : "hideMenuNav"}>
+      <div
+        className="absolute top-0 right-0 px-8 py-8"
+        onClick={() => setIsNavOpen(false)}
+      >
+        {/* X icon */}
+        <svg
+          className="h-8 w-8 text-gray-600"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+        >
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </div>
+
+      <ul className="flex flex-col gap-6 p-6 text-white text-center">
+        <li className="hover:font-bold text-xl">
+          <Link to="/">Inicio</Link>
+        </li>
+        <li className="hover:font-bold text-xl">
+          <Link to="/aboutUs">Quienes Somos</Link>
+        </li>
+        <li className="hover:font-bold text-xl">
+          <Link to="/books">Libros</Link>
+        </li>
+        <li className="hover:font-bold text-xl">
+          <Link to="/talleres">Talleres</Link>
+        </li>
+        <li className="hover:font-bold text-xl">
+          <Link to="/menu">Menú</Link>
+        </li>
+        <li className="hover:font-bold text-xl">
+          <Link to="/contact">Contacto</Link>
+        </li>
+        <li className="hover:font-bold text-xl">
+          <Link to="/dashboard">Testimonios</Link>
+        </li>
+
+        {user ? (
+          <li onClick={handleLogout} className="cursor-pointer hover:font-bold text-xl">
+            Cerrar Sesión
+          </li>
+        ) : (
+          <li className="hover:font-bold text-xl">
+            <Link to="/login">Iniciar Sesión</Link>
+          </li>
+        )}
+      </ul>
+    </div>
+  );
+
   return (
     <header className="bg-beige px-[5%] pt-[40px] pb-[10px]">
-      <div className="header-container">
+      <div>
+      <div
+        className="flex items-center justify-between pb-[15px]
+  "
+      >
         <div className="flex flex-wrap items-center pb-[15px]">
           <svg
             fill="#5c4033"
@@ -56,48 +160,30 @@ function Header() {
           </p>
         </div>
 
-        <div className="bg-[#a9745c] text-center">
-          <nav>
-            <ul className="flex py-[10px] px-[20px] justify-between flex-wrap text-white">
-              <div className="justify-start flex flex-wrap gap-[20px] text-white">
-                <li className="hover:bg-beige hover:text-brown-pink p-2 rounded-2xl font-bold">
-                  <Link to="/">Inicio</Link>
-                </li>
-                <li className="hover:bg-beige hover:text-brown-pink hover:font-bold p-2 rounded-2xl font-bold">
-                  <Link to="/aboutUs">Quienes Somos</Link>
-                </li>
-                <li className="hover:bg-beige hover:text-brown-pink hover:font-bold p-2 rounded-2xl font-bold">
-                  <Link to="/books">Libros</Link>
-                </li>
-                <li className="hover:bg-beige hover:text-brown-pink hover:font-bold p-2 rounded-2xl font-bold">
-                  <Link to="/talleres">Talleres</Link>
-                </li>
-                <li className="hover:bg-beige hover:text-brown-pink hover:font-bold p-2 rounded-2xl font-bold">
-                  <Link to="/menu">Menú</Link>
-                </li>
-                <li className="hover:bg-beige hover:text-brown-pink hover:font-bold p-2 rounded-2xl font-bold">
-                  <Link to="/contact">Contacto</Link>
-                </li>
-                <li className="hover:bg-beige hover:text-brown-pink hover:font-bold p-2 rounded-2xl font-bold">
-                  <Link to="/dashboard">Testimonios</Link>
-                </li>
-              </div>
+        <button className="md:hidden" onClick={() => setIsNavOpen(true)}>
+          <svg
+            className="w-8 h-8 text-brown-pink"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="3"
+            viewBox="0 0 24 24"
+          >
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
 
-              <div>
-                {user ? (
-                  <li
-                    onClick={handleLogout}
-                    className="hover:bg-beige hover:text-brown-pink p-2 rounded-2xl font-bold cursor-pointer"
-                  >
-                    Cerrar Sesión
-                  </li>
-                ) : (
-                  <li className="hover:bg-beige hover:text-brown-pink p-2 rounded-2xl font-bold">
-                    <Link to="/login">Iniciar Sesión</Link>
-                  </li>
-                )}
-              </div>
-            </ul>
+        </div>
+        <div className="md:bg-[#a9745c] md:text-center">
+          <nav>
+            {/* Menu de computadora (ocultando) */}
+            <div className="hidden md:block">
+              <DesktopMenu />
+            </div>
+
+            {/*Menu de celular*/}
+            <MobileMenu />
           </nav>
         </div>
       </div>
