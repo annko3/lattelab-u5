@@ -22,7 +22,7 @@ function Contact() {
 
   return (
     <main>
-      <section className=" bg-background text-brown-dark">
+      <section className="bg-background text-brown-dark">
         <div className="flex flex-col gap-[1rem] text-center items-center">
           <h1 className="text-4xl font-bold">¡Dejanos endulzarte el día!</h1>
           <p className="leading-7">

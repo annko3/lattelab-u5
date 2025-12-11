@@ -43,6 +43,9 @@ function Header() {
         <li className="hover:bg-beige hover:text-brown-pink hover:font-bold p-2 rounded-2xl font-bold">
           <Link to="/dashboard">Testimonios</Link>
         </li>
+        <li className="hover:bg-beige hover:text-brown-pink hover:font-bold p-2 rounded-2xl font-bold"> 
+          <Link to="/marketingCampaign">Campaña</Link>
+        </li>
       </div>
 
       <div>
@@ -102,6 +105,9 @@ function Header() {
         </li>
         <li className="hover:font-bold text-xl">
           <Link to="/dashboard">Testimonios</Link>
+        </li>
+        <li className="hover:bg-beige hover:text-brown-pink hover:font-bold p-2 rounded-2xl font-bold"> 
+          <Link to="/marketingCampaign">Campaña</Link>
         </li>
 
         {user ? (

@@ -10,6 +10,7 @@ import Register from './pages/login/Register.jsx';
 import Books from './pages/books/Books.jsx';
 import Talleres from "./pages/talleres/Talleres.jsx";
 import Dashboard from './pages/Dashboard.jsx';
+import MarketingCampaign from './pages/marketingCampaign/MarketingCampaign.jsx';
 import Header from './components/common/header/Header.jsx';
 import Footer from './components/common/footer/Footer.jsx';
 import PrivateRoute from "./components/PrivateRoute.jsx";
@@ -28,6 +29,7 @@ function App() {
             <Route path="/menu" element={<Menu />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/talleres" element={<Talleres />} />
+            <Route path='/marketingCampaign' element={<MarketingCampaign />} />
 
             {/* LOGIN & REGISTER */}
             <Route path="/login" element={<Login />} />
