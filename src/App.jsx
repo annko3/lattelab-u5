@@ -16,55 +16,59 @@ import Header from './components/common/header/Header.jsx';
 import Footer from './components/common/footer/Footer.jsx';
 import PrivateRoute from "./components/PrivateRoute.jsx";
 
+/* ===== IMPORTAR EL CONTEXT ===== */
+import { AppProvider } from './contexts/AppContext.jsx';
+
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <Header />
+    /* ===== ENVOLVER TODO CON EL PROVIDER ===== */
+    <AppProvider>
+      <Router>
+        <div className="App">
+          <Header />
 
-        <main>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/aboutUs" element={<AboutUs />} />
-            
-            <Route path="/menu" element={<Menu />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path='/product/:id' element={<ProductDetail />} />
+          <main>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/aboutUs" element={<AboutUs />} />
+              
+              <Route path="/menu" element={<Menu />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path='/product/:id' element={<ProductDetail />} />
 
-            {/* Restaurar rutas que faltaban */}
-            <Route path="/books" element={<Libros />} />
-            <Route path="/talleres" element={<Talleres />} />
-            <Route path="/marketingCampaign" element={<MarketingCampaign />} />
+              {/* Restaurar rutas que faltaban */}
+              <Route path="/books" element={<Libros />} />
+              <Route path="/talleres" element={<Talleres />} />
+              <Route path="/marketingCampaign" element={<MarketingCampaign />} />
 
-            {/* LOGIN & REGISTER */}
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+              {/* LOGIN & REGISTER */}
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
 
-            {/* DASHBOARD */}
-            <Route
-              path="/dashboard"
-              element={
-                <PrivateRoute>
-                  <DashboardUser />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/admin"
-              element={
-                <PrivateRoute>
-                  <DashboardAdmin />
-                </PrivateRoute>
-              }
-            />
+              {/* DASHBOARD */}
+              <Route
+                path="/dashboard"
+                element={
+                  <PrivateRoute>
+                    <DashboardUser />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/admin"
+                element={
+                  <PrivateRoute>
+                    <DashboardAdmin />
+                  </PrivateRoute>
+                }
+              />
+            </Routes>
+          </main>
 
-          </Routes>
-
-        </main>
-
-        <Footer />
-      </div>
-    </Router>
+          <Footer />
+        </div>
+      </Router>
+    </AppProvider>
   )
 }
 
