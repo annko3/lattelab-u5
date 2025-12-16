@@ -1,46 +1,180 @@
-import React, { useState } from "react";
-
-const talleres = [
-  { id: 1, nombre: "Taller Arte Latte", descripcion: "Aprende a crear diseños artísticos en tu café con leche.", horario: "Lunes 3pm - 5pm", tipo: "Café", imagen: "https://wcy.com.br/wp-content/uploads/2024/06/Latte-Art-360x445.jpeg" },
-  { id: 2, nombre: "Cata de Café", descripcion: "Descubre los sabores y aromas de diferentes tipos de café.", horario: "Martes 4pm - 6pm", tipo: "Café", imagen: "https://www.coffeemori.com/cdn/shop/articles/tomar-cafeina-es-perjudicial-para-mi.jpg?v=1646861965" },
-  { id: 3, nombre: "Técnicas de Espresso", descripcion: "Domina los métodos para lograr el espresso perfecto.", horario: "Miércoles 4pm - 6pm", tipo: "Café", imagen: "https://cdn.greenplantation.com/2021/08/1U4A1822.jpg" },
-  { id: 4, nombre: "Repostería Creativa", descripcion: "Aprende a preparar postres deliciosos y visualmente hermosos.", horario: "Jueves 2pm - 4pm", tipo: "Repostería", imagen: "https://www.gracielacoca.com/img/img-lista3.jpg" },
-  { id: 5, nombre: "Club de Lectura", descripcion: "Comparte ideas y reflexiones sobre libros inspiradores.", horario: "Viernes 3pm - 5pm", tipo: "Lectura", imagen:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTq5HeyApD506Rod65J9cgrfXNNR1KJdYon_kOW0KT7ws7a2AEBX6jVH5aKPWC4AT7869c&usqp=CAU" }, 
-  { id: 6, nombre: "Lectura de Poemas", descripcion: "Explora el arte de la poesía en voz alta.", horario: "Sábado 4pm - 6pm", tipo: "Lectura", imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKDbCJIRUiRoF3XI6qY4bPVzx4TN5HRYfEaw&s" },
-];
+import { useEffect, useState } from "react";
+import { db, auth } from "../../firebase/config";
+import { onAuthStateChanged } from "firebase/auth";
+import {
+  collection,
+  getDocs,
+  getDoc,
+  addDoc,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 
 function Talleres() {
   const [search, setSearch] = useState("");
   const [filtroTipo, setFiltroTipo] = useState("Todos");
+  const [talleres, setTalleres] = useState([]);
+  const [isAdmin, setIsAdmin] = useState(false);
 
+  const [newTaller, setNewTaller] = useState({
+    name: "",
+    description: "",
+    schedule: "",
+    type: "Café",
+    image: "",
+  });
+
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const userDoc = await getDoc(doc(db, "users", user.uid));
+        setIsAdmin(userDoc.data()?.role === "admin");
+      } else {
+        setIsAdmin(false);
+      }
+    });
+
+    return () => unsub();
+  }, []);
+
+  useEffect(() => {
+    const fetchTalleres = async () => {
+      const snapshot = await getDocs(collection(db, "talleres"));
+      const data = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setTalleres(data);
+    };
+
+    fetchTalleres();
+  }, []);
+
+  /* AGREGAR */
+  const handleAdd = async () => {
+    if (!newTaller.name || !newTaller.image) {
+      alert("Nombre e imagen son obligatorios");
+      return;
+    }
+
+    await addDoc(collection(db, "talleres"), newTaller);
+
+    setNewTaller({
+      name: "",
+      description: "",
+      schedule: "",
+      type: "Café",
+      image: "",
+    });
+
+    const snapshot = await getDocs(collection(db, "talleres"));
+    setTalleres(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+  };
+
+  /* ELIMINAR*/
+  const handleDelete = async (id) => {
+    if (!window.confirm("¿Eliminar taller?")) return;
+
+    await deleteDoc(doc(db, "talleres", id));
+    setTalleres(talleres.filter((t) => t.id !== id));
+  };
+
+  /* FILTROS */
   const filteredTalleres = talleres
-    .filter((t) => t.nombre.toLowerCase().includes(search.toLowerCase()))
-    .filter((t) => filtroTipo === "Todos" || t.tipo === filtroTipo);
+    .filter((t) =>
+      t.name.toLowerCase().includes(search.toLowerCase())
+    )
+    .filter(
+      (t) => filtroTipo === "Todos" || t.type === filtroTipo
+    );
 
   return (
-    <section className="bg-background text-brown-dark text-center">
+    <section className="bg-background text-brown-dark text-center p-6">
       <h1 className="font-bold text-4xl mb-5 text-brown-dark">Nuestros Talleres</h1>
 
+      {/* FORM DE AGREGAR TALLER */}
+      {isAdmin && (
+        <div className="max-w-md mx-auto mb-10 bg-background-alt p-4 rounded-xl">
+
+          <input
+            placeholder="Nombre"
+            value={newTaller.name}
+            onChange={(e) =>
+              setNewTaller({ ...newTaller, name: e.target.value })
+            }
+            className="mb-2 p-2 w-full rounded"
+          />
+
+          <input
+            placeholder="Descripción"
+            value={newTaller.description}
+            onChange={(e) =>
+              setNewTaller({ ...newTaller, description: e.target.value })
+            }
+            className="mb-2 p-2 w-full rounded"
+          />
+
+          <input
+            placeholder="Horario"
+            value={newTaller.schedule}
+            onChange={(e) =>
+              setNewTaller({ ...newTaller, schedule: e.target.value })
+            }
+            className="mb-2 p-2 w-full rounded"
+          />
+
+          <select
+            value={newTaller.type}
+            onChange={(e) =>
+              setNewTaller({ ...newTaller, type: e.target.value })
+            }
+            className="mb-2 p-2 w-full rounded"
+          >
+            <option value="Café">Café</option>
+            <option value="Repostería">Repostería</option>
+            <option value="Lectura">Lectura</option>
+          </select>
+
+          <input
+            placeholder="URL de imagen"
+            value={newTaller.image}
+            onChange={(e) =>
+              setNewTaller({ ...newTaller, image: e.target.value })
+            }
+            className="mb-2 p-2 w-full rounded"
+          />
+
+          <button
+            onClick={handleAdd}
+            className="bg-brown-dark text-white px-4 py-2 rounded-lg mt-2 cursor-pointer hover:bg-brown-medium transition"
+          >
+            Agregar Taller
+          </button>
+        </div>
+      )}
+
+      {/* BUSCADOR */}
       <input
         type="text"
         placeholder="Buscar taller..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="mb-6 p-2 rounded-lg border border-brown-medium w-full max-w-md mx-auto block"
+        className="mb-6 p-2 rounded-lg border w-full max-w-md mx-auto block"
       />
 
+      {/* FILTROS */}
       <div className="flex justify-center gap-4 mb-6">
-        {["Todos", "Café", "Repostería", "Lectura"].map((tipo) => (
+        {["Todos", "Café", "Repostería", "Lectura"].map((type) => (
           <button
-            key={tipo}
-            onClick={() => setFiltroTipo(tipo)}
-            className={`px-4 py-2 rounded-lg font-semibold border transition ${
-              filtroTipo === tipo
-                ? "bg-brown-dark text-white shadow-lg"
-                : "bg-background-alt text-brown-dark border-brown-medium hover:bg-brown-medium hover:text-white"
+            key={type}
+            onClick={() => setFiltroTipo(type)}
+            className={`px-4 py-2 rounded-lg font-semibold border ${
+              filtroTipo === type
+                ? "bg-brown-dark text-white"
+                : "bg-background-alt hover:bg-brown-medium hover:text-white"
             }`}
           >
-            {tipo}
+            {type}
           </button>
         ))}
       </div>
@@ -52,16 +186,25 @@ function Talleres() {
             className="bg-background-alt rounded-xl shadow-lg p-4 transition-transform duration-300 hover:scale-105 hover:shadow-red"
           >
             <img
-              src={taller.imagen}
-              alt={taller.nombre}
+              src={taller.image}
+              alt={taller.name}
               className="w-full h-64 object-cover rounded-lg mb-3 transition-transform duration-500 hover:scale-110"
             />
-            <h3 className="text-xl font-semibold">{taller.nombre}</h3>
-            <p className="text-sm mb-2">{taller.descripcion}</p>
-            <p className="text-brown-medium font-medium">{taller.horario}</p>
-            <button className="mt-3 bg-brown-medium text-white py-2 px-4 rounded-lg hover:bg-brown-dark transition">
-              Más info
-            </button>
+
+            <h3 className="text-xl font-semibold">{taller.name}</h3>
+            <p className="text-sm mb-2">{taller.description}</p>
+            <p className="text-brown-medium font-medium">
+              {taller.schedule}
+            </p>
+
+            {isAdmin && (
+              <button
+                onClick={() => handleDelete(taller.id)}
+                className="mt-3 bg-brown-medium text-white py-2 px-4 rounded-lg hover:bg-red transition cursor-pointer"
+              >
+                Eliminar
+              </button>
+            )}
           </div>
         ))}
       </div>
